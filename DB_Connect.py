@@ -55,6 +55,11 @@ class DB_Connect:
         sql = "UPDATE CUSTOMER SET isStudent = 1 WHERE USERNAME = \'" + username + '\''
         self.query(cursor, sql)
 
+    def is_student(self, username):
+        cursor = self.db.cursor()
+        sql = "SELECT ISSTUDENT FROM CUSTOMER WHERE USERNAME = '%d'" % useranme
+        self.query(cursor, sql)
+
     def validate_user(self, username, password):
         """
         Returns 1 if entered password equals pw in db, 0 if password does not match,

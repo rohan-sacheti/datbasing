@@ -635,33 +635,32 @@ class Train:
         DStation = self.depDD.get()
         AStation = self.arrDD.get()
 
-        #Need to fix SQL Statements according the database provided
-##        SQL = self.cursor.execute("""SELECT USERNAME FROM USER WHERE USERNAME=%s""", (self.Username.get()))
-##
-##        db = self.Connect()
-##        cursor = db.cursor()
-##        cursor.execute(sql)
-##        search = cursor.fetchall()
         search = self.file.select_departure(DStation, AStation)
-        inc = 0
+        print(search)
 
         self.SD =Toplevel()
         self.SD.title("Select Departure")
 
         frame = Frame(self.SD)
         frame.pack()
-        tree = self.getTrainTree(frame)
-        self.fcpPrice = []
-        self.scpPrice = []
+        print(start)
+
+        Label(frame, text ="Train (Train Number)", relief ="raised").grid(row = 0, column = 0, sticky=EW)
+        Label(frame, text ="Arrival Time", relief ="raised").grid(row = 0, column = 1, sticky=EW)
+        Label(frame, text ="Departure Time", relief ="raised").grid(row = 0, column = 2, sticky=EW)
+        Label(frame, text ="First Class Price", relief ="raised").grid(row = 0, column = 3, sticky=EW)
+        Label(frame, text ="Second Class Price", relief ="raised").grid(row = 0, column = 4, sticky=EW)
+
+        inc = 0
+
         print (search)
         for i in search:
-            tree.insert('', inc, text='', values = i)
-            fcpButton = UserSelected(frame, text = str(i[3]), onvalue=1, offvalue=0)
-            fcpButton.pack(side=RIGHT)
-            scpButton = UserSelected(frame, text = str(i[4]), onvalue=1, offvalue=0)
-            scpButton.pack(side=RIGHT)
-            self.fcpPrice.append(fcpButton)
-            self.scpPrice.append(scpButton)
+            self.v = IntVar()
+            Label(frame, text =i[0]).grid(row = inc + 1, column = 0, sticky =EW)
+            Label(frame, text =i[2]).grid(row = inc + 1, column = 1, sticky =EW)
+            Label(frame, text =i[1]).grid(row = inc + 1, column = 2, sticky = EW)
+            Radiobutton(frame, text =str(i[3]), variable = self.v, value = (2*inc)).grid(row = inc + 1, column = 3)
+            Radiobutton(frame, text =str(i[4]), variable = self.v, value = inc + 1).grid(row = inc + 1, column = 4)
             inc = inc + 1
         #error with date format
 ##        E_Date = self.DepDate.get()
