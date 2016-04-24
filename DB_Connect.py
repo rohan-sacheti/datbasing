@@ -57,8 +57,9 @@ class DB_Connect:
 
     def is_student(self, username):
         cursor = self.db.cursor()
-        sql = "SELECT ISSTUDENT FROM CUSTOMER WHERE USERNAME = '%d'" % useranme
+        sql = "SELECT ISSTUDENT FROM CUSTOMER WHERE USERNAME = '%s'" % username
         self.query(cursor, sql)
+        return cursor.fetchone()[0]
 
     def validate_user(self, username, password):
         """
@@ -449,4 +450,5 @@ class DB_Connect:
             error_code = 2
         return (cursor, error_code)
 
-DB_Connect()
+a= DB_Connect()
+print a.is_student("rsach")
